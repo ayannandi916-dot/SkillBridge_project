@@ -183,7 +183,7 @@
   .verify-detail-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 0; font-size:0.88rem; }
   .verify-detail-row + .verify-detail-row{ border-top:1px solid var(--border); }
   .verify-detail-row span{ color:var(--muted); }
-  .verify-detail-row strong{ color:var(--ink); font-weight:600; }
+  .verify-detail-row strong{ color:var(--ink); font-weight:600; text-align:right; max-width:60%; }
   .verify-panel[data-panel="success"] .btn, .verify-panel[data-panel="notfound"] .btn{ width:100%; }
   .verify-retry{
     display:block; margin:14px auto 0; background:none; border:none; color:var(--muted);
