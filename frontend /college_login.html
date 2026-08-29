@@ -28,6 +28,49 @@
     --card-shadow: 0 10px 30px -22px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.045);
     --card-shadow-hover: 0 16px 36px -18px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
   }
+  /* ── Auto-adapt to device system theme ─────────────────────────────────── */
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg:      #f8f6f2;
+      --panel:   #ffffff;
+      --panel-2: #f2efe8;
+      --border:  #e3ded4;
+      --ink:     #1c1a17;
+      --muted:   #6b6862;
+      --brand:   #ffa116;
+      --brand-dim: #cc8012;
+      --brand-ink: #b8650a;
+      --tag-green:  #039083;
+      --tag-yellow: #b9790a;
+      --tag-red:    #d21e4c;
+      --card-shadow: 0 10px 24px -18px rgba(60,50,30,0.16), inset 0 1px 0 rgba(255,255,255,0.6);
+      --card-shadow-hover: 0 16px 32px -16px rgba(60,50,30,0.2), inset 0 1px 0 rgba(255,255,255,0.7);
+      --nav-bg: rgba(248,246,242,0.85);
+      --hover-border: #c9c3b6;
+      color-scheme: light;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:      #1a1a1a;
+      --panel:   #262626;
+      --panel-2: #2d2d2d;
+      --border:  #363636;
+      --ink:     #eff1f6;
+      --muted:   #97979c;
+      --brand:   #ffa116;
+      --brand-dim: #cc8012;
+      --brand-ink: #ffa116;
+      --tag-green:  #00b8a3;
+      --tag-yellow: #ffc01e;
+      --tag-red:    #ff375f;
+      --card-shadow: 0 10px 30px -22px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.045);
+      --card-shadow-hover: 0 16px 36px -18px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
+      --nav-bg: rgba(26,26,26,0.85);
+      --hover-border: #474747;
+      color-scheme: dark;
+    }
+  }
   *,*::before,*::after{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{
@@ -234,6 +277,17 @@
   .footer-legal a{ color:var(--muted); transition:color .2s var(--ease); }
   .footer-legal a:hover{ color:var(--brand); }
 </style>
+<script>
+  (function () {
+    var saved = localStorage.getItem('sb-theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+    } else {
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+  })();
+</script>
 </head>
 <body>
 
