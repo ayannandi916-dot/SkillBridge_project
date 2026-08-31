@@ -3,15 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  (function () {
+    var saved = localStorage.getItem('sb-theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+    } else {
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+  })();
+</script>
 <title>SkillBridge — Bridging Students, Colleges &amp; Recruiters</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ffa116'/%3E%3Cg fill='none' stroke='%231a1a1a' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 40 L14 26 M50 40 L50 26'/%3E%3Cpath d='M14 26 C24 6, 40 6, 50 26'/%3E%3Cline x1='9' y1='40' x2='55' y2='40'/%3E%3Cline x1='24' y1='28' x2='24' y2='40'/%3E%3Cline x1='32' y1='20' x2='32' y2='40'/%3E%3Cline x1='40' y1='28' x2='40' y2='40'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
+    color-scheme: dark light;
     --bg:      #1a1a1a;
     --panel:   #262626;
     --panel-2: #2d2d2d;
+    --panel-3: #272727;
+    --bg-2:    #202020;
     --border:  #363636;
     --ink:     #eff1f6;
     --muted:   #97979c;
@@ -20,6 +34,10 @@
     --tag-green:  #00b8a3;
     --tag-yellow: #ffc01e;
     --tag-red:    #ff375f;
+    --nav-bg:  rgba(26,26,26,0.85);
+    --nav-bg-solid: rgba(26,26,26,0.97);
+    --glow-1:  rgba(255,161,22,0.13);
+    --glow-2:  rgba(204,128,18,0.10);
     --font-d: 'Fraunces', serif;
     --font-b: 'IBM Plex Sans', sans-serif;
     --font-m: 'IBM Plex Mono', monospace;
@@ -28,48 +46,26 @@
     --card-shadow: 0 10px 30px -22px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.045);
     --card-shadow-hover: 0 16px 36px -18px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
   }
-  /* ── Auto-adapt to device system theme ─────────────────────────────────── */
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) {
-      --bg:      #f8f6f2;
+
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      color-scheme: light dark;
+      --bg:      #f5f3ee;
       --panel:   #ffffff;
-      --panel-2: #f2efe8;
-      --border:  #e3ded4;
-      --ink:     #1c1a17;
-      --muted:   #6b6862;
-      --brand:   #ffa116;
-      --brand-dim: #cc8012;
-      --brand-ink: #b8650a;
-      --tag-green:  #039083;
-      --tag-yellow: #b9790a;
-      --tag-red:    #d21e4c;
-      --card-shadow: 0 10px 24px -18px rgba(60,50,30,0.16), inset 0 1px 0 rgba(255,255,255,0.6);
-      --card-shadow-hover: 0 16px 32px -16px rgba(60,50,30,0.2), inset 0 1px 0 rgba(255,255,255,0.7);
-      --nav-bg: rgba(248,246,242,0.85);
-      --hover-border: #c9c3b6;
-      color-scheme: light;
+      --panel-2: #faf8f3;
+      --panel-3: #f2efe7;
+      --bg-2:    #f9f7f2;
+      --border:  #e2ddd0;
+      --ink:     #1c1c1e;
+      --muted:   #6c6c72;
+      --nav-bg:  rgba(245,243,238,0.85);
+      --nav-bg-solid: rgba(245,243,238,0.97);
+      --glow-1:  rgba(255,161,22,0.09);
+      --glow-2:  rgba(204,128,18,0.07);
+      --card-shadow: 0 10px 26px -20px rgba(20,20,20,0.14), inset 0 1px 0 rgba(255,255,255,0.6);
+      --card-shadow-hover: 0 14px 32px -16px rgba(20,20,20,0.18), inset 0 1px 0 rgba(255,255,255,0.7);
     }
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg:      #1a1a1a;
-      --panel:   #262626;
-      --panel-2: #2d2d2d;
-      --border:  #363636;
-      --ink:     #eff1f6;
-      --muted:   #97979c;
-      --brand:   #ffa116;
-      --brand-dim: #cc8012;
-      --brand-ink: #ffa116;
-      --tag-green:  #00b8a3;
-      --tag-yellow: #ffc01e;
-      --tag-red:    #ff375f;
-      --card-shadow: 0 10px 30px -22px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.045);
-      --card-shadow-hover: 0 16px 36px -18px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
-      --nav-bg: rgba(26,26,26,0.85);
-      --hover-border: #474747;
-      color-scheme: dark;
-    }
+    .grain{ opacity:0.025; }
   }
   *,*::before,*::after{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
@@ -86,10 +82,10 @@
 
   /* subtle single-hue depth, no rainbow bloom */
   .glow{ position:fixed; width:640px; height:640px; top:-280px; right:-220px; border-radius:50%;
-    background:radial-gradient(circle, rgba(255,161,22,0.13), transparent 70%);
+    background:radial-gradient(circle, var(--glow-1), transparent 70%);
     filter:blur(90px); pointer-events:none; z-index:0; }
   .glow-2{ position:fixed; width:520px; height:520px; bottom:-260px; left:-180px; border-radius:50%;
-    background:radial-gradient(circle, rgba(204,128,18,0.10), transparent 70%);
+    background:radial-gradient(circle, var(--glow-2), transparent 70%);
     filter:blur(90px); pointer-events:none; z-index:0; }
   .grain{
     position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.035; mix-blend-mode:overlay;
@@ -107,7 +103,7 @@
     display:flex; align-items:center; justify-content:space-between;
     padding:18px clamp(20px,5vw,64px);
     position:sticky; top:0; z-index:40;
-    background:rgba(26,26,26,0.85);
+    background:var(--nav-bg);
     backdrop-filter:blur(10px);
     border-bottom:1px solid transparent;
     box-shadow:0 0 0 rgba(0,0,0,0);
@@ -127,6 +123,19 @@
   }
   .logo:hover .mark{ transform:rotate(-6deg) scale(1.06); }
   .logo .accent{ color:var(--brand); }
+  .theme-btn{
+    width:36px; height:36px; border-radius:9px; border:1px solid var(--border);
+    background:var(--panel); color:var(--muted); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .theme-btn:hover{ border-color:var(--brand); color:var(--brand); }
+  .theme-btn svg{ width:16px; height:16px; }
+  .icon-sun{ display:none; } .icon-moon{ display:block; }
+  [data-theme="light"] .icon-sun{ display:block; }
+  [data-theme="light"] .icon-moon{ display:none; }
+
+
   .nav-right{ display:flex; align-items:center; gap:10px; }
   .nav-links{ display:flex; gap:2rem; font-size:0.9rem; color:var(--muted); list-style:none; margin:0; padding:0; }
   .nav-links a{ position:relative; padding:6px 0; transition:color .2s var(--ease); }
@@ -308,7 +317,7 @@
   }
   .feature-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
   .feature-card{
-    background:linear-gradient(165deg, var(--bg), #202020); border:1px solid var(--border); border-radius:20px; padding:26px 24px;
+    background:linear-gradient(165deg, var(--bg), var(--bg-2)); border:1px solid var(--border); border-radius:20px; padding:26px 24px;
     box-shadow:var(--card-shadow);
     transition:border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
   }
@@ -329,7 +338,7 @@
   .contact-actions{ display:flex; gap:12px; flex-wrap:wrap; flex:none; }
 
   /* ---------- metric tiles (inside hero) ---------- */
-  .mtile{ background:linear-gradient(165deg, var(--panel-2), #272727); border:1px solid var(--border); border-radius:20px; padding:20px 20px 18px;
+  .mtile{ background:linear-gradient(165deg, var(--panel-2), var(--panel-3)); border:1px solid var(--border); border-radius:20px; padding:20px 20px 18px;
     display:flex; flex-direction:column; justify-content:center; box-shadow:var(--card-shadow);
     transition:border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease); }
   .mtile:hover{ border-color:var(--brand); transform:translateY(-2px); box-shadow:var(--card-shadow-hover); }
@@ -346,7 +355,7 @@
 
   /* ---------- pipeline chart ---------- */
   .pipeline-inner{ max-width:1400px; margin:0 auto; padding:clamp(44px,6.5vh,72px) clamp(20px,5vw,64px) 0; }
-  .pipe-card{ background:linear-gradient(165deg, var(--panel-2), #272727); border:1px solid var(--border); border-radius:20px; padding:clamp(22px,3vw,30px); box-shadow:var(--card-shadow); }
+  .pipe-card{ background:linear-gradient(165deg, var(--panel-2), var(--panel-3)); border:1px solid var(--border); border-radius:20px; padding:clamp(22px,3vw,30px); box-shadow:var(--card-shadow); }
   .pipe-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
   .pipe-sub{ margin-top:10px; font-family:var(--font-d); font-weight:600; font-size:clamp(0.98rem,1.5vw,1.15rem); color:var(--ink); }
   .pipe-tag{ font-family:var(--font-m); font-size:0.76rem; color:var(--brand); }
@@ -385,13 +394,13 @@
   .proof::before{ content:""; position:absolute; top:0; left:0; right:0; height:1px;
     background:linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent); }
   .proof-split{ display:grid; grid-template-columns:0.95fr 1.05fr; gap:24px; align-items:start; margin-top:40px; }
-  .proof-quote{ background:linear-gradient(165deg, var(--bg), #202020); border:1px solid var(--border); border-radius:20px; padding:clamp(24px,3vw,32px); box-shadow:var(--card-shadow); }
+  .proof-quote{ background:linear-gradient(165deg, var(--bg), var(--bg-2)); border:1px solid var(--border); border-radius:20px; padding:clamp(24px,3vw,32px); box-shadow:var(--card-shadow); }
   .quote-mark{ fill:var(--brand); opacity:0.5; margin-bottom:12px; }
   .proof-quote p{ font-family:var(--font-d); font-weight:600; font-size:clamp(1.02rem,1.5vw,1.25rem); line-height:1.5; color:var(--ink); margin:0; }
   .proof-by{ margin-top:22px; display:flex; flex-direction:column; gap:2px; }
   .proof-by .n{ font-size:0.92rem; font-weight:600; color:var(--ink); }
   .proof-by .r{ font-size:0.76rem; color:var(--muted); }
-  .proof-rows{ background:linear-gradient(165deg, var(--bg), #202020); border:1px solid var(--border); border-radius:20px; padding:8px 20px; display:flex; flex-direction:column; box-shadow:var(--card-shadow); }
+  .proof-rows{ background:linear-gradient(165deg, var(--bg), var(--bg-2)); border:1px solid var(--border); border-radius:20px; padding:8px 20px; display:flex; flex-direction:column; box-shadow:var(--card-shadow); }
   .proof-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 0; }
   .proof-row + .proof-row{ border-top:1px solid var(--border); }
   .proof-row .rn{ font-size:0.92rem; font-weight:600; color:var(--ink); }
@@ -409,7 +418,7 @@
     .nav-toggle{ display:flex; }
     .nav-links{
       position:absolute; top:100%; left:0; right:0; flex-direction:column; gap:0;
-      background:rgba(26,26,26,0.97); backdrop-filter:blur(10px);
+      background:var(--nav-bg-solid); backdrop-filter:blur(10px);
       border-bottom:1px solid var(--border);
       max-height:0; overflow:hidden; opacity:0; padding:0 clamp(20px,5vw,64px);
       transition:max-height .3s var(--ease), opacity .2s var(--ease), padding .3s var(--ease);
@@ -517,17 +526,6 @@
   }
 
 </style>
-<script>
-  (function () {
-    var saved = localStorage.getItem('sb-theme');
-    if (saved) {
-      document.documentElement.setAttribute('data-theme', saved);
-    } else {
-      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-    }
-  })();
-</script>
 </head>
 <body>
 
@@ -561,6 +559,10 @@
       <li><a href="#contact" data-nav="contact">Contact</a></li>
     </ul>
     <div class="nav-right">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
       <button class="btn btn-ghost" data-modal="signin">Sign In</button>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -583,12 +585,12 @@
       </div>
 
      <div class="hero-actions">
-  <button class="btn btn-primary" data-modal="get-started">
+  <a class="btn btn-primary" href="select_role.html">
     Get Started
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
       <path d="M5 12h14M13 6l6 6-6 6"/>
     </svg>
-  </button>
+  </a>
 
   <button class="btn btn-ghost" data-modal="signin">
     Sign In
@@ -837,22 +839,7 @@
         <label>Password<input type="password" required placeholder="••••••••"></label>
         <button type="submit" class="btn btn-primary modal-submit">Sign In</button>
       </form>
-      <p class="modal-switch">New here? <a href="#" data-switch="get-started">Get started</a></p>
-    </div>
-
-    <div class="modal-panel" data-panel="get-started">
-      <div class="eyebrow">// join skillbridge</div>
-      <h3>Get started</h3>
-      <div class="role-select">
-        <button type="button" class="role-btn role-green active" data-role="student">Student</button>
-        <button type="button" class="role-btn role-yellow" data-role="college">College</button>
-        <button type="button" class="role-btn role-red" data-role="recruiter">Recruiter</button>
-      </div>
-      <form class="modal-form" data-form="get-started">
-        <label>Email<input type="email" required placeholder="you@example.com"></label>
-        <button type="submit" class="btn btn-primary modal-submit">Join the waitlist</button>
-      </form>
-      <p class="modal-switch">Already onboard? <a href="#" data-switch="signin">Sign in</a></p>
+      <p class="modal-switch">New here? <a href="select_role.html">Get started</a></p>
     </div>
 
     <div class="modal-panel" data-panel="contact">
@@ -986,8 +973,12 @@
 
     var successMessages = {
       signin: "Welcome back — you're signed in.",
-      'get-started': "You're on the list — we'll email you when your access is ready.",
       contact: "Thanks — we'll get back to you shortly."
+    };
+
+    var errorMessages = {
+      signin: "Couldn't sign you in — check your email and password.",
+      contact: "Couldn't send that — please try again."
     };
 
     function crossfadeTo(showEl, hideEls) {
@@ -1058,13 +1049,84 @@
       });
     });
 
+    function setFormError(form, message) {
+      var existing = form.querySelector('.modal-error');
+      if (!message) {
+        if (existing) existing.remove();
+        return;
+      }
+      if (!existing) {
+        existing = document.createElement('p');
+        existing.className = 'modal-error';
+        existing.style.color = 'var(--tag-red)';
+        existing.style.fontSize = '0.85rem';
+        existing.style.margin = '-4px 0 0';
+        form.insertBefore(existing, form.querySelector('button[type="submit"]'));
+      }
+      existing.textContent = message;
+    }
+
+    function setSubmitting(form, isSubmitting) {
+      var btn = form.querySelector('button[type="submit"]');
+      if (!btn) return;
+      btn.disabled = isSubmitting;
+      if (isSubmitting) {
+        btn.dataset.originalText = btn.textContent;
+        btn.textContent = 'Please wait…';
+      } else if (btn.dataset.originalText) {
+        btn.textContent = btn.dataset.originalText;
+      }
+    }
+
     modalOverlay.querySelectorAll('form[data-form]').forEach(function (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var kind = form.getAttribute('data-form');
-        modalSuccessText.textContent = successMessages[kind] || "Thanks — we'll be in touch.";
-        crossfadeTo(modalSuccess, Array.prototype.slice.call(modalPanels));
-        form.reset();
+        setFormError(form, null);
+        setSubmitting(form, true);
+
+        var requestPromise;
+
+        if (kind === 'signin') {
+          var email = form.querySelector('input[type="email"]').value.trim();
+          var password = form.querySelector('input[type="password"]').value;
+          requestPromise = fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
+          }).then(function (r) {
+            return r.json().then(function (data) { return { ok: r.ok, data: data }; });
+          }).then(function (result) {
+            if (!result.ok) throw new Error(result.data.error || errorMessages.signin);
+            if (result.data.token) localStorage.setItem('sb_token', result.data.token);
+            if (result.data.user) localStorage.setItem('sb_user', JSON.stringify(result.data.user));
+          });
+        } else if (kind === 'contact') {
+          var cName = form.querySelector('input[type="text"]').value.trim();
+          var cEmail = form.querySelector('input[type="email"]').value.trim();
+          var cMessage = form.querySelector('textarea').value.trim();
+          requestPromise = fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: cName, email: cEmail, message: cMessage })
+          }).then(function (r) {
+            return r.json().then(function (data) { return { ok: r.ok, data: data }; });
+          }).then(function (result) {
+            if (!result.ok) throw new Error(result.data.error || errorMessages.contact);
+          });
+        } else {
+          requestPromise = Promise.resolve();
+        }
+
+        requestPromise.then(function () {
+          setSubmitting(form, false);
+          modalSuccessText.textContent = successMessages[kind] || "Thanks — we'll be in touch.";
+          crossfadeTo(modalSuccess, Array.prototype.slice.call(modalPanels));
+          form.reset();
+        }).catch(function (err) {
+          setSubmitting(form, false);
+          setFormError(form, err.message || errorMessages[kind] || 'Something went wrong.');
+        });
       });
     });
 
@@ -1076,9 +1138,14 @@
       if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
     });
   }
+  var themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('sb-theme', next);
+  });
+
 </script>
-
-
-
 </body>
 </html>
